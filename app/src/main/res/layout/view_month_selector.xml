@@ -1,0 +1,94 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/back_view"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/back_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
+
+
+    <View
+        android:id="@+id/front_view"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/front_view"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/back_view"
+        app:layout_constraintTop_toTopOf="@+id/back_view"
+        app:layout_constraintVertical_bias="0.5"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/txt_three"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:stateListAnimator="@drawable/selector_text_month"
+        android:text="3"
+        app:layout_constraintBottom_toBottomOf="@+id/back_view"
+        app:layout_constraintEnd_toStartOf="@+id/txt_six"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/back_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/back_view"
+        app:layout_constraintVertical_bias="0.5"
+        tools:ignore="HardcodedText" />
+
+
+    <TextView
+        android:id="@+id/txt_six"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:stateListAnimator="@drawable/selector_text_month"
+        android:text="6"
+        app:layout_constraintBottom_toBottomOf="@+id/back_view"
+        app:layout_constraintEnd_toStartOf="@+id/txt_nine"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_three"
+        app:layout_constraintTop_toTopOf="@+id/back_view"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/txt_nine"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:stateListAnimator="@drawable/selector_text_month"
+        android:text="9"
+        app:layout_constraintBottom_toBottomOf="@+id/back_view"
+        app:layout_constraintEnd_toStartOf="@+id/txt_twelve"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_six"
+        app:layout_constraintTop_toTopOf="@+id/back_view"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/txt_twelve"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:stateListAnimator="@drawable/selector_text_month"
+        android:text="12"
+        app:layout_constraintBottom_toBottomOf="@+id/back_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_nine"
+        app:layout_constraintTop_toTopOf="@+id/back_view"
+        tools:ignore="HardcodedText" />
+
+
+</android.support.constraint.ConstraintLayout>
