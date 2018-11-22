@@ -2,6 +2,7 @@ package com.example.imjarp.androidcircus.coroutine
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.TextView
 import com.example.imjarp.androidcircus.R
 import kotlinx.android.synthetic.main.activity_coroutine.*
@@ -22,8 +23,8 @@ class CoroutineActivity : AppCompatActivity() {
 
         fab.setOnClickListener { view ->
             // simpleCallNetwork()
-            // simpleCallLaunch()
-             //launchTwoOperationsAsync()
+            simpleCallLaunch()
+            //launchTwoOperationsAsync()
         }
     }
 
@@ -36,13 +37,14 @@ class CoroutineActivity : AppCompatActivity() {
 
         // This will be limited to the end of application
         GlobalScope.launch {
-            Thread.sleep(3_000)
+            Thread.sleep(2_000)
             var thread = "First job thread name =  ${Thread.currentThread().name}"
-            val response = java.net.URL("http://www.example.com/").readText()
+            val response = java.net.URL("http://www.example.com/").readText().subSequence(0, 20) as String
 
+            Log.d("workshop", response)
             textView?.post {
                 thread += "\n Then i was in ${Thread.currentThread().name}"
-                textView?.text = thread + "\n " + response.subSequence(0, 10) + textView?.text
+                textView?.text = thread + "\n " + response + textView?.text
             }
 
         }
