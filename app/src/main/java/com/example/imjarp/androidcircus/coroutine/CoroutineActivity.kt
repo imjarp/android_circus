@@ -1,5 +1,6 @@
 package com.example.imjarp.androidcircus.coroutine
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -23,8 +24,10 @@ class CoroutineActivity : AppCompatActivity() {
 
         fab.setOnClickListener { view ->
             // simpleCallNetwork()
-            simpleCallLaunch()
+            // simpleCallLaunch()
             //launchTwoOperationsAsync()
+
+            startActivity(Intent(this, ExamplePresenterActivity::class.java))
         }
     }
 

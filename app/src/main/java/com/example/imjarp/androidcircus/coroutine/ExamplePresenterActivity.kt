@@ -1,0 +1,46 @@
+package com.example.imjarp.androidcircus.coroutine
+
+import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity;
+import android.view.TextureView
+import android.view.View
+import android.widget.TextView
+import com.example.imjarp.androidcircus.R
+import com.example.imjarp.androidcircus.utils.DisptachersApp
+
+import kotlinx.android.synthetic.main.activity_example_presenter_actitivty.*
+
+class ExamplePresenterActivity : AppCompatActivity(), UrlPresenter.UrlPresenterMethods {
+
+    private var urlPresenter: UrlPresenter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_example_presenter_actitivty)
+        setSupportActionBar(toolbar)
+        urlPresenter = UrlPresenter(DisptachersApp(), this)
+        lifecycle.addObserver(urlPresenter!!)
+
+        findViewById<View>(R.id.btn).setOnClickListener {
+            urlPresenter?.execute()
+            //urlPresenter?.fetchUrl("http://www.example.com","http://www.google.com")
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        urlPresenter?.let {
+            lifecycle.removeObserver(it)
+            urlPresenter = null
+        }
+
+    }
+
+    override fun showText(text: String) {
+        findViewById<TextView>(R.id.content_text).text = text
+    }
+
+
+}

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AndroidCircus</string>
     <string name="title_activity_coroutine">CoroutineActivity</string>
+    <string name="title_activity_example_presenter_actitivty">ExamplePresenterActitivty</string>
 </resources>
