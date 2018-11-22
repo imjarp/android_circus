@@ -18,11 +18,12 @@ class CoroutineActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         textView = findViewById(R.id.result_text)
+        textView?.text = "thread name =  ${Thread.currentThread().name}"
 
         fab.setOnClickListener { view ->
             // simpleCallNetwork()
             // simpleCallLaunch()
-             launchTwoOperationsAsync()
+             //launchTwoOperationsAsync()
         }
     }
 
@@ -73,7 +74,7 @@ class CoroutineActivity : AppCompatActivity() {
 
     }
 
-    private suspend fun executeUrl(url: String): String {
+    private fun executeUrl(url: String): String {
         return java.net.URL(url).readText().subSequence(0, 10) as String
     }
 
