@@ -18,7 +18,9 @@ open class BaseScope(protected val dispatcherApp: IDispatcherApp) : CoroutineSco
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun startJobCreating() {
-        job = Job()
+        job = Job().also {
+
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)

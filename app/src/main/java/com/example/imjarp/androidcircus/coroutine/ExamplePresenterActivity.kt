@@ -8,8 +8,11 @@ import android.view.View
 import android.widget.TextView
 import com.example.imjarp.androidcircus.R
 import com.example.imjarp.androidcircus.utils.DisptachersApp
+import com.example.imjarp.androidcircus.utils.IDispatcherApp
 
 import kotlinx.android.synthetic.main.activity_example_presenter_actitivty.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 class ExamplePresenterActivity : AppCompatActivity(), UrlPresenter.UrlPresenterMethods {
 
@@ -23,8 +26,8 @@ class ExamplePresenterActivity : AppCompatActivity(), UrlPresenter.UrlPresenterM
         lifecycle.addObserver(urlPresenter!!)
 
         findViewById<View>(R.id.btn).setOnClickListener {
-            urlPresenter?.execute()
-            //urlPresenter?.fetchUrl("http://www.example.com","http://www.google.com")
+            //urlPresenter?.execute()
+            urlPresenter?.fetchUrl("www.example.com","http://www.google.com")
         }
 
     }
