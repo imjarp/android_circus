@@ -8,29 +8,11 @@
     android:animateLayoutChanges="true"
     tools:context=".MainActivity">
 
-    <com.example.imjarp.androidcircus.views.ViewAmountSlider
-        android:id="@+id/view_slider"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.imjarp.androidcircus.views.ViewMonthSelector
-        android:id="@+id/month_selector"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_slider" />
-
-    <EditText
+    <com.example.imjarp.androidcircus.views.NotifyingEditText
         android:id="@+id/ed1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:cursorVisible="false"
         android:gravity="center"
         android:imeOptions="actionNext"
         android:inputType="numberPassword"
@@ -43,17 +25,19 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:nextFocusRight="@id/ed2"
+        >
+
 
         <requestFocus />
-    </EditText>
+    </com.example.imjarp.androidcircus.views.NotifyingEditText>
 
 
-    <EditText
+    <com.example.imjarp.androidcircus.views.NotifyingEditText
         android:id="@+id/ed2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:cursorVisible="false"
         android:gravity="center"
         android:imeOptions="actionNext"
         android:inputType="numberPassword"
@@ -64,14 +48,16 @@
         app:layout_constraintEnd_toStartOf="@+id/ed3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ed1"
-        app:layout_constraintTop_toTopOf="@id/ed1" />
+        app:layout_constraintTop_toTopOf="@id/ed1"
+        android:nextFocusRight="@id/ed3"
+        android:nextFocusLeft="@id/ed1"
+        />
 
 
-    <EditText
+    <com.example.imjarp.androidcircus.views.NotifyingEditText
         android:id="@+id/ed3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:cursorVisible="false"
         android:gravity="center"
         android:imeOptions="actionNext"
         android:inputType="numberPassword"
@@ -82,13 +68,15 @@
         app:layout_constraintEnd_toStartOf="@+id/ed4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ed2"
-        app:layout_constraintTop_toTopOf="@id/ed1" />
+        app:layout_constraintTop_toTopOf="@id/ed1"
+        android:nextFocusRight="@id/ed4"
+        android:nextFocusLeft="@id/ed2"
+        />
 
-    <EditText
+    <com.example.imjarp.androidcircus.views.NotifyingEditText
         android:id="@+id/ed4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:cursorVisible="false"
         android:gravity="center"
         android:imeOptions="actionDone"
         android:inputType="numberPassword"
@@ -99,7 +87,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ed3"
-        app:layout_constraintTop_toTopOf="@id/ed1" />
+        app:layout_constraintTop_toTopOf="@id/ed1"
+        android:nextFocusLeft="@id/ed3"
+
+        />
 
     <TextView
         android:id="@+id/text"
@@ -107,5 +98,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/phot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

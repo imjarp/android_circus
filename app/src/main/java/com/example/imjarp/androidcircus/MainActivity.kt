@@ -1,84 +1,134 @@
 package com.example.imjarp.androidcircus
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.SpannableString
+import android.text.InputType
+import android.text.TextUtils
 import android.text.TextWatcher
-import android.text.style.ImageSpan
-import android.util.Log
+import android.view.KeyEvent
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.example.imjarp.androidcircus.kotlin.KotlinSamples
-import com.example.imjarp.androidcircus.kotlin.SequencesSamples
-import com.example.imjarp.androidcircus.views.ViewAmountSlider
-import kotlinx.android.synthetic.main.activity_main.*
-import java.math.BigDecimal
+import com.example.imjarp.androidcircus.views.NotifyingEditText
 
 
-class MainActivity : AppCompatActivity(), ViewAmountSlider.StepMoveListener, TextWatcher {
+class MainActivity : AppCompatActivity() {
+    lateinit var edViews: MutableList<NotifyingEditText>
+    val cameraCode = 1
+    val cameraValue = 109
 
+    override fun getCurrentFocus(): View? {
+        return super.getCurrentFocus()
+    }
+
+    fun isValid(): Boolean {
+        return edViews.all { !TextUtils.isEmpty(it.text) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
-        val slider = findViewById<ViewAmountSlider>(R.id.view_slider)
-        slider.setView(getMoneyRange(), this)
-        val sourceSpan = SpannableString("A")
-        val d = ContextCompat.getDrawable(this, R.drawable.circle)!!
-        d.setBounds(0, 0, 32, 32)
-        val imageSpan = ImageSpan(d, ImageSpan.ALIGN_BOTTOM)
-        sourceSpan.setSpan(imageSpan, 0, 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        ed1.hint = sourceSpan
-        ed2.hint = sourceSpan
-        ed3.hint = sourceSpan
-        ed4.hint = sourceSpan
+        val ed1 = findViewById<NotifyingEditText>(R.id.ed1)
+        val ed2 = findViewById<NotifyingEditText>(R.id.ed2)
+        val ed3 = findViewById<NotifyingEditText>(R.id.ed3)
+        val ed4 = findViewById<NotifyingEditText>(R.id.ed4)
 
-        ed1.addTextChangedListener(this)
-        ed2.addTextChangedListener(this)
-        ed3.addTextChangedListener(this)
-        ed4.addTextChangedListener(this)
-    }
+        edViews = mutableListOf()
+        edViews.addAll(listOf(ed1, ed2, ed3, ed4))
 
-    override fun afterTextChanged(s: Editable?) = Unit
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (s?.length == 1 && ed1.hasFocus()) {
-            ed2.postDelayed({ ed2.requestFocus() }, 100)
-        } else if (s?.length == 1 && ed2.hasFocus()) {
-            ed3.postDelayed({ ed3.requestFocus() }, 100)
-        } else if (s?.length == 1 && ed3.hasFocus()) {
-            ed4.postDelayed({ ed4.requestFocus() }, 100)
+        edViews.forEach {
+            it.clearFocus()
         }
+
+        val onEditorActionListener = OnEditorActionListener { v, actionId, event ->
+            if (actionId == 5 && !this.isValid()) {
+                focusOnNext(v as EditText)
+                //Toast.makeText(this, "Finish", Toast.LENGTH_SHORT).show()
+            }
+
+            true
+        }
+
+        val onKeyListener = object : View.OnKeyListener {
+            override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
+                val confirmationCodeView = v as EditText
+                if (keyCode >= 7 && keyCode <= 16 && event.action == 0) {
+                    val text = Character.toString(event.unicodeChar.toChar())
+                    confirmationCodeView.setText(text)
+                    return true
+                } else if (keyCode == 67 && event.action == 0) {
+                    if (confirmationCodeView.text.length == 0) {
+                        val previous = focusOnPrevious(confirmationCodeView)
+                        previous?.setText("")
+
+                    } else {
+                        confirmationCodeView.setText("")
+                    }
+
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+
+
+        val edits = edViews
+
+        edits.forEachIndexed { index, notifyingEditText ->
+
+            notifyingEditText.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+            notifyingEditText.setOnEditorActionListener(onEditorActionListener)
+            notifyingEditText.setOnKeyListener(onKeyListener)
+            notifyingEditText.setOnSoftKeyListener(onKeyListener)
+            notifyingEditText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) = Unit
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s?.length == 1) {
+                        focusOnNext(notifyingEditText)
+                    }
+                }
+
+            })
+
+        }
+
+        ed1.requestFocus()
+
     }
 
-
-    private fun sample() {
-        SequencesSamples().filter(mutableListOf())
-        //val sealedSample = SealedSample()
-        //sealedSample.test()
-
-
-        val facebookUser = KotlinSamples.FacebookUser()
-        var name = facebookUser.nickname
-        name = facebookUser.nickname
-        name = facebookUser.nickname
-
-        val fixedUser = KotlinSamples.FixedUser("Sonia")
-        name = fixedUser.nickname
-        name = fixedUser.nickname
+    private fun focusOnPrevious(confirmationCodeView: EditText): EditText? {
+        var edit: EditText? = null
+        edViews.forEachIndexed { index, notifyingEditText ->
+            if (confirmationCodeView.id == notifyingEditText.id && index > 0) {
+                edit = edViews[index - 1]
+            }
+        }
+        edit?.requestFocus()
+        return edit
     }
 
-    private fun getMoneyRange(): ViewAmountSlider.MoneyRangeView {
-        return ViewAmountSlider.MoneyRangeView(BigDecimal(2_000),
-                BigDecimal(50_000),
-                500)
+    private fun focusOnNext(confirmationCodeView: EditText): EditText? {
+        var edit: EditText? = null
+        edViews.forEachIndexed { index, notifyingEditText ->
+            if (confirmationCodeView.id == notifyingEditText.id && index < edViews.size) {
+                edit = edViews[index + 1]
+            }
+        }
+        edit?.requestFocus()
+        return edit
     }
 
-    override fun onStepMove(stepMove: ViewAmountSlider.StepMove) {
-        Log.d("circus_touch", stepMove.amountInStep.toPlainString())
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 

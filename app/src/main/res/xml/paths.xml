@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+
+    <files-path
+        name="files"
+        path="files" />
+
+    <files-path
+        name="files"
+        path="." />
+    <external-path
+        name="external_files"
+        path="." />
+    <external-path
+        name="dcim"
+        path="DCIM" />
+    <files-path
+        name="image_file"
+        path="." />
+
+    <cache-path
+        name="shared_images"
+        path="images/" />
+</paths>
